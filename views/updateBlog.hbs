@@ -1,0 +1,16 @@
+
+
+<h1>Update Blog</h1>
+{{> errors errors}}
+<form method="POST">
+	<div>
+		<input type="text" name="date" value="{{blog.date}}">
+	</div>
+    <div>
+		<input type="text" name="title" value="{{blog.title}}">
+	</div>
+	<div>
+		<input type="text" name="blogEntry" value="{{blog.blogEntry}}">
+	</div>
+	<input type="submit" value="Update">
+</form>

@@ -1,0 +1,17 @@
+
+
+<h1>Create Blog</h1>
+
+<form action="/blogs/create" method="POST">
+	<div>
+		Date: <input type='date' id='hasta' value='<?php echo date('Y-m-d');?>'>
+	</div>
+    <div>
+		Title: <input type="text" name="title">
+	</div>
+	<div>
+		<label class="form-label" for="input-example-3">Blog Entry</label>
+  		<textarea class="form-input" placeholder="Type your blog" rows="7"></textarea>
+	</div> <br><br>
+	<input type="submit" value="Create Blog">
+</form>

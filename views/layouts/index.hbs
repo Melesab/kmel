@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>KMeles</title>
+	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+	<link rel="stylesheet" href="/static/layout.css">
+</head>
+<body>	
+  	<header class="title" style="text-align: center;">
+		<h1> KMeles </h1>
+		<section class="navbar">
+			<div class="navbar-section">
+				<a href="/" class="btn btn-link bg-success">Home</a>
+				<a href="/about" class="btn btn-link">About Me</a>
+				<a href="/contact" class="btn btn-link">Contact</a>
+			</div>
+			<div class="navbar-section">
+				{{#if isLoggedIn}}
+					<form method="post" action="/logout">
+					<!-- <input type="hidden" name="_csrf" value="{{csrfToken}}"> -->
+					<input type="submit" value="Log out" class="btn btn-link bg-success">
+					</form>
+				{{else}}
+					<form method="post" action="/login">
+						<input type="submit" value="Admin" class="btn btn-link bg-success">
+					</form>
+				{{/if}}
+				<div class="input-group input-inline">
+					<input class="form-input" type="text" placeholder="search">
+					<button class="btn btn-primary input-group-btn">Search</button>
+				</div>
+			</div>
+		</section>
+	</header>
+	<div class="container">
+		<div class="columns">
+			<div class="column col-2" style="background-color: bisque;">
+				<ul class="nav">
+					<li class="nav-item active">
+						<a href="/blogs">Blogs</a>
+						{{#if isLoggedIn}}
+							<ul class="nav">
+									<li class="nav-item">
+										<a href="/blogs/create">Create Blog</a>
+									</li>
+									<li class="nav-item">
+										<a href="#">Delete Blog</a>
+									</li>
+							</ul>
+						{{/if}}
+					</li>
+					<li class="nav-item active">
+						<a href="#">Projects</a>
+						{{#if isLoggedIn}}
+							<ul class="nav">
+								<li class="nav-item">
+									<a href="#">Create Project</a>
+								</li>
+								<li class="nav-item">
+									<a href="#">Delete Project</a>
+								</li>
+							</ul>
+						{{/if}}
+					</li>
+					<li class="nav-item active">
+						<a href="#">Comments</a>
+						{{#if isLoggedIn}}
+							<ul class="nav">
+								<li class="nav-item">
+									<a href="#">Edit Comment</a>
+								</li>
+								<li class="nav-item">
+									<a href="#">Delete Comment</a>
+								</li>
+							</ul>
+						{{/if}}
+					</li>
+				</ul>	
+			</div>
+			<div class="column col-10" style="background-color: rgb(220, 206, 233);">
+				<main>{{{body}}}</main>
+			</div>
+		</div>
+	</div>
+	
+	<footer class="footer">
+		<div class="centered">
+			Developed by Meles 2021 |
+			<a href="/about">About</a> |
+			<a href="/contact">Contact</a>
+		</div>
+	</footer>
+</body>
+</html>

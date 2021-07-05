@@ -1,0 +1,4 @@
+
+node_modules/
+my-database.db
+sessions.db

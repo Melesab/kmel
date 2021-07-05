@@ -1,0 +1,14 @@
+
+
+<h1>Update User</h1>
+
+{{> errors errors}}
+<form method="POST">
+    <div>
+		<input type="text" name="name" value="{{user.name}}">
+	</div>
+	<div>
+		<input type="number" name="age" value="{{user.age}}">
+	</div>
+	<input type="submit" value="Update">
+</form>
