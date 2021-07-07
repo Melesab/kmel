@@ -1,13 +1,23 @@
+
+
+
 const express = require('express')
 const db = require('../db')
 
 const MIN_LENGTH = 5
+const MIN_NAME_LENGTH = 2
 
 
-function getBlogValidationErrors(date, title, blogEntry){
+function getFollowerValidationErrors(date, firstname, secondname, city, description){
     const validationErrors = []
-    if(title.length < MIN_LENGTH && blogEntry.length < MIN_LENGTH){
-        validationErrors.push("Error:: Title and blogEntry must be at least "+TITLE_MIN_LENGTH+" characters!")
+    if(firstname.length < MIN_NAME_LENGTH && secondname.length < MIN_NAME_LENGTH){
+        validationErrors.push("Error:: firstname and secondname must be at least "+MIN_NAME_LENGTH+" characters!")
+    }
+    if(city.length == 0){
+        validationErrors.push("Error:: City can not be empty!")
+    }
+    if(description.length < MIN_LENGTH){
+        validationErrors.push("Error:: Description must be atleast "+MIN_LENGTH+" characters!")
     }
     if(date.length != 10){
         validationErrors.push("Error:: Date must be YYYY-MM-DD!")
@@ -19,76 +29,72 @@ function getBlogValidationErrors(date, title, blogEntry){
 const router = express.Router()
 
 router.get("/", (req, res)=> {
-    db.getAllBlogs((error, blogs)=> {
+    db.getAllFollowers((error, followers)=> {
         if(error){
             console.log(error)
             const model = { 
                 dbErrorOccured: true
             }
-            res.render("blogs.hbs", model)
+            res.render("followers.hbs", model)
         }else{
             const model = {
-                blogs,
+                followers,
                 dbErrorOccured: false
             }
-            res.render("blogs.hbs", model)
+            res.render("followers.hbs", model)
         }
     })
 })
 
 
 router.get("/create", (req, res)=> {
-    res.render("createBlog.hbs")
+    res.render("followerCreate.hbs")
 })
 
 
 router.post("/create", (req, res)=> {
-    
     const date = req.body.date
-    const title = req.body.title
-    const blogEntry = req.body.blogEntry
-    const errors = getBlogValidationErrors(date, title, blogEntry)
+    const firstname = req.body.firstname
+    const secondname = req.body.secondname
+    const city = req.body.city
+    const description = req.body.description
+    const errors = getFollowerValidationErrors(date, firstname, secondname, city, description)
 
-    if(!req.session.isLoggedIn){
-        errors.push("Error:: You must log in first!")
-    }
     if(0<errors.length){
         const model = {errors}
-        res.render("createBlog.hbs", model)
+        res.render("followerCreate.hbs", model)
         return
     }else{
-        db.createBlog(date, title, blogEntry, (error, id)=>{
+        db.createFollower(date, firstname, secondname, city, description, (error, id)=>{
             if(error){
                 console.log(error)
                 const model = { 
                     dbErrorOccured: true
                 }
-                res.render("createBlog.hbs", model)
+                res.render("followerCreate.hbs", model)
             }else{
-                res.redirect("/blogs")
+                res.redirect("/followers")
             }
         })
     }
 })
 
-
-
 router.get("/update/:id", (req, res)=> {
     const id = req.params.id
 
-    db.getBlogById(id, (error, blog)=> {
+    db.getFollowerById(id, (error, follower)=> {
         if(error){
             console.log(error)
             const model = { 
                 dbErrorOccured: true
             }
-            res.render("updateBlog.hbs", model)
+            res.render("followerUpdate.hbs", model)
         }else{
             const model = {
-                blog,
+                follower,
                 dbErrorOccured: false
             }
-            res.render("updateBLog.hbs", model)
+            res.render("followerUpdate.hbs", model)
         }
     })
 })
@@ -98,10 +104,11 @@ router.post("/update/:id", (req, res)=>{
 
     const id = req.params.id
     const newDate = req.body.date
-    const newTitle = req.body.title
-    const newBlogEntry = req.body.blogEntry
-
-    const errors = getBlogValidationErrors(newDate, newTitle, newBlogEntry)
+    const newFirstname = req.body.firstname
+    const newSecondname = req.body.secondname
+    const newCity = req.body.city
+    const newDescription = req.body.description
+    const errors = getFollowerValidationErrors(newDate, newFirstname, newSecondname, newCity, newDescription)
 
     if(!req.session.isLoggedIn){
         errors.push("Errors:: You must log in first!")
@@ -109,25 +116,27 @@ router.post("/update/:id", (req, res)=>{
     if(0<errors.length){
         const model = {
             errors, 
-            blog: {
+            follower: {
                 id,
                 date: newDate,
-                title: newTitle,
-                blogEntry: newBlogEntry
+                firstname: newFirstname,
+                secondname: newSecondname,
+                city: newCity,
+                description: newDescription
             }
         }
-    res.render("updateBlog.hbs", model)
+    res.render("followerUpdate.hbs", model)
     return
     }
-    db.updateBlogById(newDate, newTitle, newBlogEntry, id, (error)=>{
+    db.updateFollowerById(newDate, newFirstname, newSecondname, newCity, newDescription, id, (error)=>{
         if(error){
             console.log(error)
             const model = { 
                 dbErrorOccured: true
             }
-            res.render("updateBlog.hbs", model)
+            res.render("followerUpdate.hbs", model)
         }else{
-            res.redirect("/blogs")
+            res.redirect("/followers")
         }
     })
 })
@@ -141,15 +150,15 @@ router.post("/delete/:id", (req, res)=> {
         errors.push("Errors:: You must log in first!")
     }
 
-    db.deleteBlogById(id, (error)=>{
+    db.deleteFollowerById(id, (error)=>{
         if(error){
             console.log(error)
             const model = { 
                 dbErrorOccured: true
             }
-            res.render("blog.hbs", model)
+            res.render("follower.hbs", model)
         }else{
-            res.redirect("/blogs")
+            res.redirect("/followers")
         }
     })
 })
@@ -157,19 +166,18 @@ router.post("/delete/:id", (req, res)=> {
 router.get("/:id", (req, res)=>{
 
     const id = req.params.id
-    db.getBlogById(id, (error, blog)=>{
+    db.getFollowerById(id, (error, follower)=>{
         if(error){
-            console.log(error)
             const model = { 
                 dbErrorOccured: true
             }
-            res.render("blog.hbs", model)
+            res.render("follower.hbs", model)
         }else{
             const model = {
-                blog,
+                follower,
                 dbErrorOccured: false
             }
-            res.render("blog.hbs", model)
+            res.render("follower.hbs", model)
         }
     })
 })

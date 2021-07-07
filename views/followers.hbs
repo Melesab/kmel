@@ -1,0 +1,15 @@
+
+<h1>Followers List</h1>
+
+{{#if dbErrorOccurred}}
+	<p>Can't display the page now, try again later.</p>
+{{else}}
+	{{#if followers.length}}
+		{{#each followers}}
+			<a href="/followers/{{id}}"><h5 style="display: inline;"> Full name:</h5> {{firstname}} {{secondname}}  <b> City:</b>  <em> {{city}}</em> <b> Date:</b> <em> {{date}}</em><br> <h5>Description</h5><p>{{description}}</p></a>
+		{{/each}}
+	{{else}}
+		<p>There are no followers.</p>
+	{{/if}}
+	<a href="/followers/create"><button>Subscribe</button></a> <br><br>	
+{{/if}}

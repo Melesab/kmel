@@ -8,8 +8,7 @@ const path = require('path')
 // ¤¤¤¤¤¤¤¤¤
 const SQLiteStore = require('connect-sqlite3')(expressSession)
 // const db = require('./db')
-const usersRouter = require('./routers/usersRouter')
-// usersRouter will be commentsRouter
+const followersRouter = require('./routers/followersRouter')
 //3rd projectsRouter
 const blogsRouter = require('./routers/blogsRouter')
 
@@ -26,7 +25,7 @@ const ADMIN_PASSWORD = "12345"
 const app = express()
 
 app.engine('hbs', expressHandlebars({
-    defaultLayout: 'index',
+    defaultLayout: 'main',
     extname: '.hbs'
 }))
 app.set('view engine', 'hbs');
@@ -46,23 +45,23 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use("/users", usersRouter)
-app.use("/blogs", blogsRouter)
-app.use(express.static("static"))
-
 
 
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: false
 }))
+
+app.use(express.static("static"))
+app.use("/followers", followersRouter)
+app.use("/blogs", blogsRouter)
+
+
 app.get("/", function(req, res){
     res.render("home.hbs")
 })
-
 app.get("/about", function(req, res){
     res.render("about.hbs")
 })
-
 app.get("/contact", function(req, res){
     res.render("contact.hbs")
 })
@@ -70,11 +69,9 @@ app.get("/contact", function(req, res){
 
 app.get("/login", (req,res)=>
     res.render("login.hbs"))
-
 app.post("/login", function(req, res) {
     const enteredUsername = req.body.username
     const enteredPassword = req.body.password
-
     if(enteredUsername == ADMIN_USERNAME && enteredPassword == ADMIN_PASSWORD){
         req.session.isLoggedIn = true
         res.redirect("/")
@@ -86,13 +83,12 @@ app.post("/login", function(req, res) {
         res.render("login.hbs", model)
     }
 })
- // post not get down here
 app.post("/logout", (req, res)=> {
     req.session.isLoggedIn = false
     res.redirect("/")
 })
 
-console.log("Go to web browser localhost:8080")
+console.log("Browse website on localhost:8080")
 app.listen(8080)
 
 

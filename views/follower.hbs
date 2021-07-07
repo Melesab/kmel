@@ -1,0 +1,21 @@
+
+<h1>Follower</h1>
+
+{{#if follower}}
+	<h5>{{follower.firstname}} {{follower.secondname}}  </h5>
+	<em>{{follower.date}}</em>
+    <h4>{{follower.city}} </h4>
+	<p>{{follower.description}}</p>
+
+	{{#if isLoggedIn}}
+		<a href="/followers/update/{{follower.id}}"><button>Update</button></a> <br><br>
+		<form action="/followers/delete/{{follower.id}}" method="POST">
+			<input type="submit" value="Delete">
+		</form>		
+	{{else}}
+		<a href="/comments/create"><button>Comment</button></a>
+	{{/if}}
+	
+{{else}}
+	<p>No follower with that id exists.</p>
+{{/if}}

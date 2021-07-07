@@ -45,40 +45,22 @@
 						<a href="/blogs">Blogs</a>
 						{{#if isLoggedIn}}
 							<ul class="nav">
-									<li class="nav-item">
-										<a href="/blogs/create">Create Blog</a>
-									</li>
-									<li class="nav-item">
-										<a href="#">Delete Blog</a>
-									</li>
+								<li class="nav-item">
+									<a href="/blogs/create">Create Blog</a>
+								</li>
 							</ul>
 						{{/if}}
 					</li>
 					<li class="nav-item active">
-						<a href="#">Projects</a>
-						{{#if isLoggedIn}}
-							<ul class="nav">
-								<li class="nav-item">
-									<a href="#">Create Project</a>
-								</li>
-								<li class="nav-item">
-									<a href="#">Delete Project</a>
-								</li>
-							</ul>
-						{{/if}}
+						<a href="/followers">Followers</a>
+						<ul class="nav">
+							<li class="nav-item">
+								<a href="/followers/create">Subscribe</a>
+							</li>
+						</ul>
 					</li>
 					<li class="nav-item active">
 						<a href="#">Comments</a>
-						{{#if isLoggedIn}}
-							<ul class="nav">
-								<li class="nav-item">
-									<a href="#">Edit Comment</a>
-								</li>
-								<li class="nav-item">
-									<a href="#">Delete Comment</a>
-								</li>
-							</ul>
-						{{/if}}
 					</li>
 				</ul>	
 			</div>

@@ -1,12 +1,7 @@
-
-
 <h1>All Blogs</h1>
 {{#if dbErrorOccurred}}
 	<p>Can't display the page now, try again later.</p>
 {{else}}
-	{{#if isLoggedIn}}
-		<a href="/blogs/create"><button>Create Blog</button></a> <br><br>
-	{{/if}}
 	{{#if blogs.length}}
 		{{#each blogs}}
 			<a href="/blogs/{{id}}"><h5 style="display: inline;">{{title}}</h5>  <em>{{date}}</em><br><p>{{blogEntry}}</p></a>
@@ -14,5 +9,7 @@
 	{{else}}
 		<p>There are no Blogs.</p>
 	{{/if}}
-	
+	{{#if isLoggedIn}}
+		<a href="/blogs/create"><button>Create New Blog</button></a> <br><br>
+	{{/if}}	
 {{/if}}

@@ -1,0 +1,28 @@
+<h1>New Follower</h1>
+
+{{#if errors.length}}
+    <ul>
+      {{#each errors}}
+        <li> {{this}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+<form action="/followers/create" method="POST">
+	<div>
+		Date: <input type='text' placeholder="date YYYY-MM-DD" name="date">
+	</div> <br>
+	<div>
+		Title: <input type="text" placeholder="Enter Firstname" name="firstname">
+	</div>
+	<div>
+		Title: <input type="text" placeholder="Enter Secondname" name="secondname">
+	</div>
+	<div>
+		Title: <input type="text" placeholder="Enter City" name="city">
+	</div> <br>
+	<div>
+        <textarea rows = "8" cols = "130" placeholder="Enter Description" name = "description"></textarea>
+	</div> <br>
+	<input type="submit" value="Create New Follower">
+</form>
