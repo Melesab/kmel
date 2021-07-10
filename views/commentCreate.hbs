@@ -1,0 +1,23 @@
+
+<h1>Create Comment</h1>
+
+{{#if errors.length}}
+    <ul>
+      {{#each errors}}
+        <li> {{this}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+<form action="" method="POST">
+	<div>
+		Username: <input type="text" name="username">
+	</div><br>
+	<div>
+		Blog Title: <input type="text" name="blogTitle">
+	</div><br>
+	<div>
+        New Comment: <br><textarea rows = "8" cols = "130" placeholder="Enter Comment" name = "comment"></textarea>
+	</div>
+	<br><br>
+	<input type="submit" value="Submit Comment">
+</form>

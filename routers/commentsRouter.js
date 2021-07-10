@@ -4,13 +4,16 @@ const db = require('../db')
 const MIN_INPUT_LENGTH = 3
 
 
-function getCommentValidationErrors(blogId, userId, userName, theComment){
+function getCommentValidationErrors(username, blogTitle, comment){
     const validationErrors = []
-    if(theComment.length < MIN_INPUT_LENGTH && userName < MIN_INPUT_LENGTH){
+    if(comment.length < MIN_INPUT_LENGTH){
         validationErrors.push("Error:: Comment must be at least "+MIN_INPUT_LENGTH+" characters!")
     }
-    if(isNaN(blogId) && isNaN(userId)){
-        validationErrors.push("Error:: CommentID not generated!")
+    if(username.length == 0){
+        validationErrors.push("Error:: Username can not be empty!")
+    }
+    if(blogTitle.length == 0){
+        validationErrors.push("Error:: Blog Title can not be empty!")
     } 
     return validationErrors
 }
@@ -19,13 +22,17 @@ function getCommentValidationErrors(blogId, userId, userName, theComment){
 const router = express.Router()
 
 router.get("/", (req, res)=> {
+    const errors = []
     db.getAllComments((error, comments)=> {
         if(error){
-            console.log(error)
-            const model = { 
+            errors.push("Internal Error:: check connection to server!")
+            errors.push(error)
+            const model = {
+                errors,
                 dbErrorOccured: true
             }
             res.render("comments.hbs", model)
+            return
         }else{
             const model = {
                 comments,
@@ -35,117 +42,112 @@ router.get("/", (req, res)=> {
         }
     })
 })
-
-
 router.get("/create", (req, res)=> {
-    res.render("createComment.hbs")
+    res.render("commentCreate.hbs")
 })
-
-
 router.post("/create", (req, res)=> {
-
-    const blogId = req.params.blog.id
-    const userId = req.params.user.id
-    const userName = req.params.user.name
-    const theComment = req.body.theComment
-    console.log(blogId)
-    console.log(userId)
-    console.log(userName)
-    console.log(theComment)
-    const errors = getCommentValidationErrors(blogId, userId, userName, theComment)
-
+    const username = req.body.username
+    const blogTitle = req.body.blogTitle
+    const comment = req.body.comment
+    const errors = getCommentValidationErrors(username, blogTitle, comment)
     if(0<errors.length){
         const model = {errors}
-        res.render("createComment.hbs", model)
+        res.render("commentCreate.hbs", model)
         return
     }else{
-        db.createComment(blogId, userId, userName, theComment, (error, id)=>{
+        db.createComment(username, blogTitle, comment, (error, id)=>{
             if(error){
-                console.log(error)
-                const model = { 
+                errors.push("Internal Error:: check connection to server!")
+                errors.push(error)
+                if(0<errors.length){
+                    const model = {errors}
+                    res.render("commentCreate.hbs", model)
+                    return
+                }
+                const model = {
                     dbErrorOccured: true
                 }
-                res.render("createComment.hbs", model)
+                res.render("commentCreate.hbs", model)
             }else{
                 res.redirect("/comments")
             }
         })
     }
 })
-
-
-
 router.get("/update/:id", (req, res)=> {
     const id = req.params.id
-
+    const errors = []
+    if(!req.session.isLoggedIn){
+        errors.push("Error:: You must log in first!")
+    }
     db.getCommentById(id, (error, comment)=> {
         if(error){
-            console.log(error)
-            const model = { 
+            errors.push("Internal Error:: check connection to server!")
+            errors.push(error)
+            const model = {
+                errors,
                 dbErrorOccured: true
             }
-            res.render("updateComment.hbs", model)
+            res.render("commentUpdate.hbs", model)
         }else{
             const model = {
                 comment,
                 dbErrorOccured: false
             }
-            res.render("updateComment.hbs", model)
+            res.render("commentUpdate.hbs", model)
         }
     })
 })
-
-
 router.post("/update/:id", (req, res)=>{
-
+    
     const id = req.params.id
-    const blogId = req.params.blogId
-    const userId = req.params.userId
-    const userName = req.params.userName
-    const newComment = req.body.theComment
-
-    const errors = getCommentValidationErrors(blogId, userId, userName, newComment)
-
+    const blogTitle = req.body.blogTitle
+    const newUsername = req.body.username
+    const newComment = req.body.comment
+    const errors = getCommentValidationErrors(newUsername, blogTitle, newComment)
+    if(!req.session.isLoggedIn){
+        errors.push("Error:: You must log in first!")
+    }
     if(0<errors.length){
         const model = {
             errors, 
             comment: {
                 id,
-                blogId,
-                userId,
-                userId,
-                theComment: newComment
+                blogTitle: blogTitle,
+                username: newUsername,
+                comment: newComment
             }
         }
-    res.render("updateComment.hbs", model)
+    res.render("commentUpdate.hbs", model)
     return
     }
-    db.updateCommentById(blogId, userId, userName, newComment, id, (error)=>{
+    db.updateCommentById(newUsername, blogTitle, newComment, id, (error)=>{
         if(error){
-            console.log(error)
-            const model = { 
+            errors.push("Internal Error:: check connection to server!")
+            errors.push(error)
+            const model = {
+                errors,
                 dbErrorOccured: true
             }
-            res.render("updateComment.hbs", model)
+            res.render("commentUpdate.hbs", model)
         }else{
             res.redirect("/comments")
         }
     })
 })
-
-
-router.post("/remove/:id", (req, res)=> {
+router.post("/delete/:id", (req, res)=> {
 
     const id = req.params.id
-
+    const errors = []
     if(!req.session.isLoggedIn){
-        errors.push("Errors:: You must log in first!")
+        errors.push("Error:: You must log in first!")
     }
-
     db.deleteCommentById(id, (error)=>{
         if(error){
-            console.log(error)
+            errors.push("Internal Error:: check connection to server!")
+            errors.push(error)
             const model = { 
+                errors,
                 dbErrorOccured: true
             }
             res.render("comment.hbs", model)
@@ -154,14 +156,16 @@ router.post("/remove/:id", (req, res)=> {
         }
     })
 })
-
 router.get("/:id", (req, res)=>{
 
     const id = req.params.id
+    const errors = []
     db.getCommentById(id, (error, comment)=>{
         if(error){
-            console.log(error)
+            errors.push("Internal Error:: check connection to server!")
+            errors.push(error)
             const model = { 
+                errors,
                 dbErrorOccured: true
             }
             res.render("comment.hbs", model)
@@ -174,6 +178,5 @@ router.get("/:id", (req, res)=>{
         }
     })
 })
-
 
 module.exports = router

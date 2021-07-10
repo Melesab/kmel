@@ -1,6 +1,5 @@
+<h1>Blog </h1>
 
-
-<h1>Blog Entry</h1>
 {{#if blog}}
 	<h5>{{blog.title}}  </h5>
 	<em>{{blog.date}}</em>
@@ -10,10 +9,9 @@
 		<a href="/blogs/update/{{blog.id}}"><button>Update</button></a> <br><br>
 		<form action="/blogs/delete/{{blog.id}}" method="POST">
 			<input type="submit" value="Delete">
-		</form>		
-	{{else}}
-		<a href="/comments/create"><button>Comment</button></a>
+		</form>	
 	{{/if}}
+	<a href="/comments/create"><button>Comment</button></a>
 	
 {{else}}
 	<p>No blog with that id exists.</p>

@@ -1,6 +1,3 @@
-
-
-
 const express = require('express')
 const db = require('../db')
 
@@ -25,7 +22,6 @@ function getFollowerValidationErrors(date, firstname, secondname, city, descript
     return validationErrors
 }
 
-
 const router = express.Router()
 
 router.get("/", (req, res)=> {
@@ -45,13 +41,9 @@ router.get("/", (req, res)=> {
         }
     })
 })
-
-
 router.get("/create", (req, res)=> {
     res.render("followerCreate.hbs")
 })
-
-
 router.post("/create", (req, res)=> {
     const date = req.body.date
     const firstname = req.body.firstname
@@ -67,7 +59,6 @@ router.post("/create", (req, res)=> {
     }else{
         db.createFollower(date, firstname, secondname, city, description, (error, id)=>{
             if(error){
-                console.log(error)
                 const model = { 
                     dbErrorOccured: true
                 }
@@ -78,13 +69,13 @@ router.post("/create", (req, res)=> {
         })
     }
 })
-
 router.get("/update/:id", (req, res)=> {
     const id = req.params.id
-
+    if(!req.session.isLoggedIn){
+        errors.push("Errors:: You must log in first!")
+    }
     db.getFollowerById(id, (error, follower)=> {
         if(error){
-            console.log(error)
             const model = { 
                 dbErrorOccured: true
             }
@@ -98,8 +89,6 @@ router.get("/update/:id", (req, res)=> {
         }
     })
 })
-
-
 router.post("/update/:id", (req, res)=>{
 
     const id = req.params.id
@@ -109,7 +98,6 @@ router.post("/update/:id", (req, res)=>{
     const newCity = req.body.city
     const newDescription = req.body.description
     const errors = getFollowerValidationErrors(newDate, newFirstname, newSecondname, newCity, newDescription)
-
     if(!req.session.isLoggedIn){
         errors.push("Errors:: You must log in first!")
     }
@@ -130,7 +118,6 @@ router.post("/update/:id", (req, res)=>{
     }
     db.updateFollowerById(newDate, newFirstname, newSecondname, newCity, newDescription, id, (error)=>{
         if(error){
-            console.log(error)
             const model = { 
                 dbErrorOccured: true
             }
@@ -140,19 +127,14 @@ router.post("/update/:id", (req, res)=>{
         }
     })
 })
-
-
 router.post("/delete/:id", (req, res)=> {
 
     const id = req.params.id
-
     if(!req.session.isLoggedIn){
         errors.push("Errors:: You must log in first!")
     }
-
     db.deleteFollowerById(id, (error)=>{
         if(error){
-            console.log(error)
             const model = { 
                 dbErrorOccured: true
             }
@@ -162,7 +144,6 @@ router.post("/delete/:id", (req, res)=> {
         }
     })
 })
-
 router.get("/:id", (req, res)=>{
 
     const id = req.params.id
@@ -181,6 +162,5 @@ router.get("/:id", (req, res)=>{
         }
     })
 })
-
 
 module.exports = router

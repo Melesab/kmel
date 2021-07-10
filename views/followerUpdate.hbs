@@ -1,5 +1,12 @@
 <h1>Update Follower</h1>
 
+{{#if errors.length}}
+    <ul>
+      {{#each errors}}
+        <li> {{this}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
 <form method="POST">
 	<div>
 		<input type="text" name="date" value="{{follower.date}}">

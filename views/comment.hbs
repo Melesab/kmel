@@ -3,17 +3,15 @@
 <h1>Comment</h1>
 {{#if comment}}
 	<h5>{{comment.commentId}}  </h5>
-	<em>{{comment.userId}}. {{comment.userName}}</em>
-	<p>{{comment.theComment}}</p>
-
-    <a href="/comments/update/{{comment.id}}"><button>Update</button></a> <br><br>
-	{{#if isLoggedIn}}
-		<form action="/comments/remove/{{comment.id}}" method="POST">
+	<b>Title: </b>  <em>{{comment.blogTitle}} </em> <b>User: </b> <em>{{comment.username}}</em>
+	<p>{{comment.comment}}</p>
+	{{#if isLoggedIn}}	
+		<a href="/comments/update/{{comment.id}}"><button>Update</button></a>
+		<form action="/comments/delete/{{comment.id}}" method="POST" style="display: inline;">
 			<input type="submit" value="Delete">
 		</form>
-	{{else}}
-		<a href="/comments/create"><button>Comment</button></a>
 	{{/if}}
+	<a href="/comments/create"><button>Add Comment</button></a>
 	
 {{else}}
 	<p>No comment with that title exists.</p>

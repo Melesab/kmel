@@ -4,13 +4,13 @@
 {{#if dbErrorOccurred}}
 	<p>Can't display the page now, try again later.</p>
 {{else}}
-	<a href="/comments/create"><button>Create Comment></a> <br><br>
 	{{#if comments.length}}
 		{{#each comments}}
-			<a href="/comments/{{id}}"><h5 style="display: inline;">{{userName}}</h5>  <br><p>{{theComment}}</p></a>
+			<a href="/comments/{{id}}"><h5 style="display: inline;">{{userName}}</h5> <h5>{{blogTitle}}</h5> <p>{{comment}}</p></a>
 		{{/each}}
 	{{else}}
 		<p>There are no comments to display!>
-	{{/if}}
+	{{/if}}	
+	<a href="/comments/create"><button>Add Comment></button></a> <br><br>
 	
 {{/if}}

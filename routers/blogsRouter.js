@@ -3,7 +3,6 @@ const db = require('../db')
 
 const MIN_LENGTH = 5
 
-
 function getBlogValidationErrors(date, title, blogEntry){
     const validationErrors = []
     if(title.length < MIN_LENGTH && blogEntry.length < MIN_LENGTH){
@@ -14,7 +13,6 @@ function getBlogValidationErrors(date, title, blogEntry){
     } 
     return validationErrors
 }
-
 
 const router = express.Router()
 
@@ -35,13 +33,9 @@ router.get("/", (req, res)=> {
         }
     })
 })
-
-
 router.get("/create", (req, res)=> {
     res.render("createBlog.hbs")
 })
-
-
 router.post("/create", (req, res)=> {
     
     const date = req.body.date
@@ -70,9 +64,6 @@ router.post("/create", (req, res)=> {
         })
     }
 })
-
-
-
 router.get("/update/:id", (req, res)=> {
     const id = req.params.id
 
@@ -92,8 +83,6 @@ router.get("/update/:id", (req, res)=> {
         }
     })
 })
-
-
 router.post("/update/:id", (req, res)=>{
 
     const id = req.params.id
@@ -131,8 +120,6 @@ router.post("/update/:id", (req, res)=>{
         }
     })
 })
-
-
 router.post("/delete/:id", (req, res)=> {
 
     const id = req.params.id
@@ -153,7 +140,6 @@ router.post("/delete/:id", (req, res)=> {
         }
     })
 })
-
 router.get("/:id", (req, res)=>{
 
     const id = req.params.id
@@ -173,6 +159,5 @@ router.get("/:id", (req, res)=>{
         }
     })
 })
-
 
 module.exports = router

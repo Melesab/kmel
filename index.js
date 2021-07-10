@@ -9,7 +9,7 @@ const path = require('path')
 const SQLiteStore = require('connect-sqlite3')(expressSession)
 // const db = require('./db')
 const followersRouter = require('./routers/followersRouter')
-//3rd projectsRouter
+const commentsRouter = require('./routers/commentsRouter')
 const blogsRouter = require('./routers/blogsRouter')
 
 //#####################################
@@ -21,7 +21,6 @@ const blogsRouter = require('./routers/blogsRouter')
 const ADMIN_USERNAME = "admin"
 const ADMIN_PASSWORD = "12345"
 
-
 const app = express()
 
 app.engine('hbs', expressHandlebars({
@@ -29,8 +28,6 @@ app.engine('hbs', expressHandlebars({
     extname: '.hbs'
 }))
 app.set('view engine', 'hbs');
-
-
 app.use(expressSession({
     secret: "123456qas",         // remember to change to  lenlenmenele
     saveUninitialized: false,
@@ -39,22 +36,17 @@ app.use(expressSession({
         db: "sessions.db"
     })
 }))
-
 app.use((req, res, next) => {
     res.locals.isLoggedIn = req.session.isLoggedIn
     next()
 })
-
-
-
 app.use(bodyParser.urlencoded({
     extended: false
 }))
-
 app.use(express.static("static"))
 app.use("/followers", followersRouter)
 app.use("/blogs", blogsRouter)
-
+app.use("/comments", commentsRouter)
 
 app.get("/", function(req, res){
     res.render("home.hbs")
@@ -65,7 +57,6 @@ app.get("/about", function(req, res){
 app.get("/contact", function(req, res){
     res.render("contact.hbs")
 })
-
 
 app.get("/login", (req,res)=>
     res.render("login.hbs"))

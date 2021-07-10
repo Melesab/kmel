@@ -9,6 +9,9 @@ db.run(
 db.run(
     'CREATE TABLE IF NOT EXISTS Followers ( id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, firstname TEXT, secondname TEXT, city TEXT, description TEXT)'
 )
+db.run(
+    'CREATE TABLE IF NOT EXISTS Comments ( id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, comment TEXT, blogTitle TEXT)'
+)
 
 exports.getAllBlogs = function(callback) {
 
@@ -93,4 +96,44 @@ exports.deleteFollowerById = function(id, callback) {
     })
 }
 
+// >>>>>>>>>>  Comments queries <<<<<<<<<<<<<<<
 
+exports.getAllComments = function(callback) {
+
+    const query = "SELECT * FROM comments ORDER BY id"
+    db.all(query, (error, comments) => {
+        callback(error, comments)
+    })
+}
+exports.createComment = function(username, blogTitle, comment, callback) {
+
+    const query = "INSERT INTO comments (username, blogTitle, comment) VALUES (?, ?, ?)"
+    const values = [username, blogTitle, comment]
+    db.run(query, values, (error) => {
+        callback(error, this.lastID)
+    })
+}
+exports.getCommentById = function(id, callback) {
+
+    const query = "SELECT * FROM comments WHERE id = ?"
+    const values = [id]
+    db.get(query, values, (error, comment) => {
+        callback(error, comment)
+    })
+}
+exports.updateCommentById = function(id, username, blogTitle, comment, callback) {
+
+    const query = "UPDATE comments SET username = ?, blogTitle = ?, comment = ? WHERE id = ?"
+    const values = [id, username, blogTitle, comment]
+    db.run(query, values, (error) => {
+        callback(error)
+    })
+}
+exports.deleteCommentById = function(id, callback) {
+
+    const query = "DELETE FROM comments WHERE id = ?"
+    const values = [id]
+    db.run(query, values, (error) => {
+        callback(error)
+    })
+}

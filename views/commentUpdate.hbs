@@ -1,0 +1,22 @@
+<h1>Update Comment</h1>
+
+{{#if errors.length}}
+    <ul>
+      {{#each errors}}
+        <li> {{this}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+<form method="POST">
+  <div>
+		Username: <input type="text" name="username" value="{{comment.username}}">
+	</div><br>
+	<div>
+		Blog Title: <input type="text" name="blogTitle" value="{{comment.blogTitle}}">
+	</div><br>
+	<div>
+        <textarea rows = "8" cols = "130" name = "comment"> {{comment.comment}} </textarea>
+	</div>
+	<br><br>
+	<input type="submit" value="Update">
+</form>
