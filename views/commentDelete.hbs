@@ -1,14 +1,18 @@
 <h1>Delete comment</h1>
 
-<form method="POST">
-	<div>
-		<input type="text" name="username" value="{{comment.username}}">
-	</div>
-    <div>
-		<input type="text" name="blogTitle" value="{{comment.blogTitle}}">
+<form action="" method="POST">
+	<div class="form-group">
+		<label for="username">Username: </label>
+		<input type="text" id="username" name="username" class="form-control" value="{{comment.username}}">
 	</div>
 	<div>
-		<input type="text" name="comment" value="{{comment.comment}}">
+		<label for="blogTitle">Blog Title: </label>
+		<input type="text" id="blogTitle" name="blogTitle" value="{{comment.blogTitle}}">>
+	</div> <br>
+	<div>
+	<label for="comment">Comment: </label>
+	<textarea rows = "8" cols = "130" id="comment" placeholder="Enter Comment" name = "comment"> {{comment.comment}} </textarea>
 	</div>
-	<input type="submit" value="Delete">
+	<input type="hidden" name="_csrf" value="{{ _csrf }}">
+	<button type="submit" class="btn btn-primary">Delete Comment</button>
 </form>

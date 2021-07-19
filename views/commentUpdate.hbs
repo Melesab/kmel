@@ -6,17 +6,20 @@
         <li> {{this}}</li>
       {{/each}}
     </ul>
-  {{/if}}
-<form method="POST">
-  <div>
-		Username: <input type="text" name="username" value="{{comment.username}}">
-	</div><br>
-	<div>
-		Blog Title: <input type="text" name="blogTitle" value="{{comment.blogTitle}}">
-	</div><br>
-	<div>
-        <textarea rows = "8" cols = "130" name = "comment"> {{comment.comment}} </textarea>
+{{/if}}
+<form action="" method="POST">
+	<div class="form-group">
+		<label for="username">Username: </label>
+		<input type="text" id="username" name="username" value="{{comment.username}}" class="form-control">
 	</div>
-	<br><br>
-	<input type="submit" value="Update">
+	<div>
+		<label for="blogTitle">Blog Title: </label>
+		<input type="text" id="blogTitle" name="blogTitle" value="{{comment.blogTitle}}">
+	</div> <br>
+	<div>
+	<label for="comment">Comment: </label>
+	<textarea rows = "8" cols = "130" id="comment" placeholder="Enter Comment" name = "comment"> {{comment.comment}} </textarea>
+	</div>
+	<input type="hidden" name="_csrf" value="{{ _csrf }}">
+	<button type="submit" class="btn btn-primary">Update Comment</button>
 </form>

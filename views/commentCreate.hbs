@@ -7,17 +7,20 @@
         <li> {{this}}</li>
       {{/each}}
     </ul>
-  {{/if}}
+{{/if}}
 <form action="" method="POST">
-	<div>
-		Username: <input type="text" name="username">
-	</div><br>
-	<div>
-		Blog Title: <input type="text" name="blogTitle">
-	</div><br>
-	<div>
-        New Comment: <br><textarea rows = "8" cols = "130" placeholder="Enter Comment" name = "comment"></textarea>
+	<div class="form-group">
+		<label for="username">Username: </label>
+		<input type="text" id="username" name="username" class="form-control">
 	</div>
-	<br><br>
-	<input type="submit" value="Submit Comment">
+	<div>
+		<label for="blogTitle">Blog Title: </label>
+		<input type="text" id="blogTitle" name="blogTitle">
+	</div> <br>
+	<div>
+	<label for="comment">New Comment: </label>
+	<textarea rows = "8" cols = "130" id="comment" placeholder="Enter Comment" name = "comment"></textarea>
+	</div>
+	<input type="hidden" name="_csrf" value="{{ _csrf }}">
+	<button type="submit" class="btn btn-primary">Send Comment</button>
 </form>

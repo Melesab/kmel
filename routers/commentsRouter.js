@@ -99,7 +99,6 @@ router.get("/update/:id", (req, res)=> {
     })
 })
 router.post("/update/:id", (req, res)=>{
-    
     const id = req.params.id
     const blogTitle = req.body.blogTitle
     const newUsername = req.body.username
@@ -136,14 +135,17 @@ router.post("/update/:id", (req, res)=>{
     })
 })
 router.post("/delete/:id", (req, res)=> {
-
+    console.log("====>> Line 138, commentsRouter.js. delete post")
     const id = req.params.id
     const errors = []
     if(!req.session.isLoggedIn){
         errors.push("Error:: You must log in first!")
+        console.log("====>> Line 138, commentsRouter.js. delete post")
     }
     db.deleteCommentById(id, (error)=>{
+        console.log("====>> Line 146, commentsRouter.js. delete/post/db")
         if(error){
+            console.log("====>> Line 148, commentsRouter.js. delete post/dbError")
             errors.push("Internal Error:: check connection to server!")
             errors.push(error)
             const model = { 
@@ -152,8 +154,10 @@ router.post("/delete/:id", (req, res)=> {
             }
             res.render("comment.hbs", model)
         }else{
+            console.log("====>> Line 157, commentsRouter.js. delete post/noDBError")
             res.redirect("/comments")
         }
+        console.log("====>> Line 138, commentsRouter.js. delete post/clear")
     })
 })
 router.get("/:id", (req, res)=>{
