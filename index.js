@@ -54,8 +54,9 @@ app.use((req, res, next) => {
     res.locals.isLoggedIn = req.session.isLoggedIn
     next()
 })
-app.use(express.static("/static"))
+//app.use(express.static("/static"))
 app.use(express.static(__dirname + '/static'))
+//app.use(express())
 app.use("/followers", followersRouter)
 app.use("/blogs", blogsRouter)
 app.use("/comments", commentsRouter)

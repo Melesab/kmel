@@ -3,15 +3,74 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>KMeles</title>
+	<link rel="stylesheet" href="/layout.css">
 	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-	<link rel="stylesheet" src="/static/layout.css">
 </head>
+
+
+<body>
+
+<!-- 
+<div style="background:yellow;padding:5px">
+  <h4 style="text-align:center">Resize the browser window to see the responsive effect.</h4>
+</div>
+
+<!-- Header 
+<div class="header">
+  <h1>My Website</h1>
+  <p>With a <b>flexible</b> layout.</p>
+</div>
+
+<!-- Navigation Bar
+<div class="navbar">
+  <a href="#">Link</a>
+  <a href="#">Link</a>
+  <a href="#">Link</a>
+  <a href="#">Link</a>
+</div>
+
+<!-- The flexible grid (content) 
+<div class="row">
+  <div class="side">
+    <h2>About Me</h2>
+    <h5>Photo of me:</h5>
+    <div class="fakeimg" style="height:200px;">Image</div>
+    <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
+    <h3>More Text</h3>
+    <p>Lorem ipsum dolor sit ame.</p>
+    <div class="fakeimg" style="height:60px;">Image</div><br>
+    <div class="fakeimg" style="height:60px;">Image</div><br>
+    <div class="fakeimg" style="height:60px;">Image</div>
+  </div>
+  <div class="main">
+    <h2>TITLE HEADING</h2>
+    <h5>Title description, Dec 7, 2017</h5>
+    <div class="fakeimg" style="height:200px;">Image</div>
+    <p>Some text..</p>
+    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+    <br>
+    <h2>TITLE HEADING</h2>
+    <h5>Title description, Sep 2, 2017</h5>
+    <div class="fakeimg" style="height:200px;">Image</div>
+    <p>Some text..</p>
+    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <h2>Footer</h2>
+</div>
+
+</body>
+</html>
+
+
+-->
 <body>	
-  	<header class="title" style="text-align: center;">
+  	<div class="title">
 		<h1> KMeles </h1>
 		<section class="navbar">
 			<div class="navbar-section">
@@ -33,10 +92,9 @@
         		{{/if}}
 			</div>
 		</section>
-	</header>
-	<div class="container">
+	</div>
 		<div class="columns">
-			<div class="column col-2" style="background-color: bisque;">
+			<div class="sideMenu" >
 				<ul class="nav">
 					<li class="nav-item active">
 						<a href="/blogs">Blogs</a>
@@ -62,7 +120,7 @@
 					</li>
 				</ul>	
 			</div>
-			<div class="column col-10" style="background-color: rgb(220, 206, 233);">
+			<div class="main" style="background-color: rgb(220, 206, 233);">
 				<main>{{{body}}}</main>
 			</div>
 		</div>
