@@ -2,6 +2,13 @@
 
 <h1>Update Blog</h1>
 
+{{#if errors.length}}
+    <ul>
+      {{#each errors}}
+        <li> {{this}}</li>
+      {{/each}}
+    </ul>
+{{/if}}
 <form method="POST">
 	<div>
 		<input type="text" name="date" value="{{blog.date}}">
@@ -12,5 +19,6 @@
 	<div>
         <textarea rows = "8" cols = "130" name = "blogEntry"> {{blog.blogEntry}} </textarea>
 	</div> <br>
+	<input type="hidden" name="_csrf" value="{{ _csrf }}">
 	<input type="submit" value="Update">
 </form>

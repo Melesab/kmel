@@ -8,6 +8,7 @@
 	{{#if isLoggedIn}}
 		<a href="/blogs/update/{{blog.id}}"><button>Update</button></a> <br><br>
 		<form action="/blogs/delete/{{blog.id}}" method="POST">
+			<input type="hidden" name="_csrf" value="{{ _csrf }}">
 			<input type="submit" value="Delete">
 		</form>	
 	{{/if}}

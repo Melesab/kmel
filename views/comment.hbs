@@ -8,6 +8,7 @@
 	{{#if isLoggedIn}}	
 		<a href="/comments/update/{{comment.id}}"><button>Update</button></a>
 		<form action="/comments/delete/{{comment.id}}" method="POST" style="display: inline;">
+			<input type="hidden" name="_csrf" value="{{ _csrf }}">
 			<input type="submit" value="Delete">
 		</form>
 	{{/if}}

@@ -10,6 +10,7 @@
 	{{#if isLoggedIn}}
 		<a href="/followers/update/{{follower.id}}"><button>Update</button></a> <br><br>
 		<form action="/followers/delete/{{follower.id}}" method="POST">
+			<input type="hidden" name="_csrf" value="{{ _csrf }}">
 			<input type="submit" value="Delete">
 		</form>		
 	{{else}}

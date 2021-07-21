@@ -84,7 +84,6 @@ router.get("/update/:id", (req, res)=> {
     })
 })
 router.post("/update/:id", (req, res)=>{
-
     const id = req.params.id
     const newDate = req.body.date
     const newTitle = req.body.title

@@ -6,7 +6,7 @@
         <li> {{this}}</li>
       {{/each}}
     </ul>
-  {{/if}}
+{{/if}}
 <form method="POST">
 	<div>
 		<input type="text" name="date" value="{{follower.date}}">
@@ -23,5 +23,6 @@
 	<div>
         <textarea rows = "8" cols = "130" name = "description"> {{follower.description}} </textarea>
 	</div> <br>
+	<input type="hidden" name="_csrf" value="{{ _csrf }}">
 	<input type="submit" value="Update">
 </form>

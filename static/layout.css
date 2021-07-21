@@ -1,80 +1,87 @@
 
 
-.title {
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+}
+
+html {
+  font-family: "Lucida Sans", sans-serif;
+}
+
+.header {
+  background-color: #4deb89;
+  color: #654ea5;
+  padding: 15px;
   font-style: italic;
   font-size: larger;
-  background-color: rgb(207, 172, 240);
   text-align: center;
-  text-size-adjust: auto;
   text-shadow: black;
 }
 
-@media (min-width: 600px) {
-  
-  .sideMenu{
-    width: 16.6666667%;
-      background-color: rgb(117, 171, 189);
-      height: 1000px;
-  }
-  .main{
-    width: 83.333333337%;
-    background-color: rgb(151, 216, 160);
-    height: 1000px;
-  }
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-@media (max-width: 600px) {
-  
-  .col-12 {
-    width: 100%;
-  }
-  .main {
-    width: 100%;
-  }
-  .sideMenu {
-    width: 100%;
-    background-color: chartreuse;
-  }
+.menu li {
+  padding: 8px;
+  margin-bottom: 7px;
+  background-color: #33b5e5;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
-  
-sideMenu {
-    font-style: italic;
-    text-emphasis-color: rgb(208, 223, 219);
+.menu li a {
+  padding: 8px;
+  margin-bottom: 7px;
+  background-color: #33b5e5;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
-
-main{
-    text-align: left;
-}
-
-footer{
-    padding: 0%;
-    text-align: center;
-    font-style: italic;
-    position: fixed;
-    bottom: 0px;
-    padding-inline-start: 0%;
+.menu li ul {
+  padding: 8px;
+  margin-bottom: 7px;
+  background-color: #33b5e5;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
-.col-12 h1{
-    text-align: center;
-    font-size: 3.5vw;
-    font-weight: bolder; font-style: oblique;
-    text-shadow: blueviolet; text-shadow: 15px;
-    text-emphasis-color: rgb(6, 6, 68);
+.menu li:hover {
+  background-color: #0099cc;
 }
-.col-12 h3{
-    text-align: center;
-    font-size: 2vw;
-    font-weight: bolder; font-style: oblique;
-    text-shadow: blueviolet; text-shadow: 10px;
-    text-emphasis-color: rgb(6, 6, 68);
+
+.footer {
+  background-color: #0099cc;
+  color: #ffffff;
+  text-align: center;
+  font-size: 12px;
+  padding: 15px;
 }
-.col-9{
-    text-align: justify;
-    padding-left: 15px;
-    padding-right: 30px;
+
+/* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
 }
-.title{
-    text-align: center;
-    text-decoration-color: rgb(94, 29, 33);
+
+@media only screen and (min-width: 600px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
 }
